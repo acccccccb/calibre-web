@@ -375,7 +375,7 @@ def clean_author_database(renamed_author, calibrepath, local_book=None):
 # behandeln
 
 # Moves files in file storage during author/title rename, or from temp dir to file storage
-def update_dir_structure_file(book_id, calibrepath, first_author, orignal_filepath, db_filename, renamed_author):
+def update_dir_structure_file(book_id, calibrepath, first_author, orignal_filepath, db_filename, renamed_author=[]):
     # get book database entry from id, if original path overwrite source with original_filepath
     localbook = calibre_db.get_book(book_id)
     if orignal_filepath:
@@ -407,8 +407,8 @@ def update_dir_structure_file(book_id, calibrepath, first_author, orignal_filepa
                              src=old_author_path, dest=new_author_path, error=str(ex))
     else:
         new_authordir = get_valid_filename(localbook.authors[0].name)
-    new_titledir = get_valid_filename(localbook.title) + " (" + str(book_id) + ")"
-
+    # new_titledir = get_valid_filename(localbook.title) + " (" + str(book_id) + ")"
+    new_titledir = get_valid_filename(localbook.title)
     if titledir != new_titledir or authordir != new_authordir or orignal_filepath:
         new_path = os.path.join(calibrepath, new_authordir, new_titledir)
         new_name = get_valid_filename(localbook.title) + ' - ' + new_authordir
